@@ -1,9 +1,8 @@
-import { useState } from "react"
 import PropTypes from 'prop-types'
 
-const ProgressBar = ({ progressBarTitle }) => {
+const ProgressBar = ({ progressBarTitle, progress }) => {
 
-  const [progress, setProgress] = useState(0)
+  const displayProgress = progress > 100 ? 100 : progress
 
   return (
     <div className="progress_bar_title_and_bar_container">
@@ -11,7 +10,7 @@ const ProgressBar = ({ progressBarTitle }) => {
       <div className="progress_bar_title"> {progressBarTitle} </div>
 
       <div className="progress_bar_container">
-        <div className="progress_bar_percentage"> {progress}% </div>
+        <div className="progress_bar_percentage"> {displayProgress}% </div>
         <div className="progress_bar_bg_container">
           <div className="progress_bar_filler" style={{ width: `${progress}%` }}></div>
         </div> 
@@ -23,6 +22,7 @@ const ProgressBar = ({ progressBarTitle }) => {
 
 ProgressBar.propTypes = {
   progressBarTitle: PropTypes.string,
+  progress: PropTypes.number,
 }
 
 export default ProgressBar

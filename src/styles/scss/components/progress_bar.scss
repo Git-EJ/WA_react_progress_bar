@@ -36,9 +36,11 @@
     height: 15px;
     background-color: $bar_bg_container_color;
     box-shadow: $bar_box_shadow;
+    overflow: hidden;
   }
 
   &_filler {
+    width:100%;
     height: 100%;
     background-color: #fff;
     transition: width 0.2s ease-in;
