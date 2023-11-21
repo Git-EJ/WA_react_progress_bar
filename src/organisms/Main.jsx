@@ -59,14 +59,20 @@ const Main = () => {
     }
   }
 
+  /**
+   * 
+   * @param {number} amount
+   * @description increase the progress bar by amount
+   * 
+  **/
 
-  const increaseByFive = () => {
+  const increaseByAmount = (amount) => {
     if (isChecked1 && progress1 >= 100) {
       return;
     }
   
     if (isChecked1) {
-      const newProgress = progress1 + 5 > 100 ? 100 : progress1 + 5;
+      const newProgress = progress1 + amount > 100 ? 100 : progress1 + amount;
       setProgress1(newProgress);
     }
 
@@ -75,33 +81,12 @@ const Main = () => {
     }
   
     if (isChecked2) {
-      const newProgress = progress2 + 5 > 100 ? 100 : progress2 + 5;
+      const newProgress = progress2 + amount > 100 ? 100 : progress2 + amount;
       setProgress2(newProgress);
     }
   }
 
-
-  const increaseByTen = () => {
-    if (isChecked1 && progress1 >= 100) {
-      return;
-    }
   
-    if (isChecked1) {
-      const newProgress = progress1 + 10 > 100 ? 100 : progress1 + 10;
-      setProgress1(newProgress);
-    }
-
-    if (isChecked2 && progress2 >= 100) {
-      return;
-    }
-  
-    if (isChecked2) {
-      const newProgress = progress2 + 10 > 100 ? 100 : progress2 + 10;
-      setProgress2(newProgress);
-    }
-  }
-
-
   return (
     <main className="main_wrapper">
       <div className="main_title">
@@ -127,8 +112,8 @@ const Main = () => {
 
       <div className="main_buttons_container">
         <button className="main_button" onClick={decreaseToZero}>Remettre à zéro les compteurs</button>
-        <button className="main_button" onClick={increaseByFive}>Ajouter 5%</button>
-        <button className="main_button" onClick={increaseByTen}>Ajouter 10%</button>
+        <button className="main_button" onClick={() => increaseByAmount(5)}>Ajouter 5%</button>
+        <button className="main_button" onClick={() => increaseByAmount(10)}>Ajouter 10%</button>
       </div>
     </main>
   )
