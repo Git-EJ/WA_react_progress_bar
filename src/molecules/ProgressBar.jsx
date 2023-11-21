@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
 
-const ProgressBar = ({ progressBarTitle, progress }) => {
+const ProgressBar = ({  progressBarTitle, 
+                        progress, 
+                        handleCheckboxChange,
+                        isChecked 
+                      }) => {
 
-  const displayProgress = progress > 100 ? 100 : progress
   const [color, setColor] = useState('')
   
-
   useEffect(() => {
     
     const changeColor = () => {
@@ -29,7 +31,7 @@ const ProgressBar = ({ progressBarTitle, progress }) => {
     
     changeColor()
 
-  }, [progress, color])
+  }, [progress])
 
 
   return (
@@ -38,12 +40,12 @@ const ProgressBar = ({ progressBarTitle, progress }) => {
       <div className="progress_bar_title"> {progressBarTitle} </div>
 
       <div className="progress_bar_container">
-        <div className="progress_bar_percentage"> {displayProgress}% </div>
+        <div className="progress_bar_percentage"> {progress}% </div>
         <div className="progress_bar_bg_container">
           <div className="progress_bar_filler" style={{ width: `${progress}%`, backgroundColor:`${color}` }}></div>
-        </div> 
+        </div>
+        <input className="progress_bar_checkbox" type="checkbox" checked={isChecked} onChange={handleCheckboxChange} /> 
       </div>
-
     </div>
   )
 }
@@ -51,6 +53,8 @@ const ProgressBar = ({ progressBarTitle, progress }) => {
 ProgressBar.propTypes = {
   progressBarTitle: PropTypes.string,
   progress: PropTypes.number,
+  handleCheckboxChange: PropTypes.func,
+  isChecked: PropTypes.bool,
 }
 
 export default ProgressBar
