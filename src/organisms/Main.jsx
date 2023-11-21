@@ -17,7 +17,6 @@ const Main = () => {
     }
     setProgress1(0)
     setProgress2(0)
-    console.log('decreaseToZero')
   }
 
   const increaseByFive = () => {
@@ -31,7 +30,6 @@ const Main = () => {
 
     setProgress1(prevProgress => prevProgress + 5)
     setProgress2(prevProgress => prevProgress + 5)
-    console.log('increaseByFive')
   }
 
   const increaseByTen = () => {
@@ -51,7 +49,6 @@ const Main = () => {
     
     setProgress1(prevProgress => prevProgress + 10)
     setProgress2(prevProgress => prevProgress + 10)
-    console.log('increaseBy10')
   }
 
 
