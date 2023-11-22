@@ -67,7 +67,20 @@ const Main = () => {
     setProgressBars(newProgressBars)
   }
 
-  
+  /**
+   * 
+   * @description  This function is called when the delete icon is clicked, and delete the progress bar
+   * 
+   */
+  const deleteProgressBar = () => {
+    const newProgressBars = [...progressBars]
+    newProgressBars.forEach(progressBar => {
+      const index = newProgressBars.indexOf(progressBar)
+      newProgressBars.splice(index, 1)
+    })
+    setProgressBars(newProgressBars)
+  }
+
   return (
     <main className="main_wrapper">
       <div className="main_title">
@@ -84,6 +97,7 @@ const Main = () => {
               progress={progressBar.progress}
               handleCheckboxChange={() => handleCheckboxChange(index)}
               isChecked={progressBar.isChecked}
+              deleteProgressBar={deleteProgressBar}
             />
           )
         })}

@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react'
 const ProgressBar = ({  progressBarTitle, 
                         progress, 
                         handleCheckboxChange,
-                        isChecked 
+                        isChecked,
+                        deleteProgressBar
                       }) => {
 
   const [color, setColor] = useState('') //for the progress bar filler and percentage color
@@ -54,6 +55,9 @@ const ProgressBar = ({  progressBarTitle,
         </div>
         
         <input className="progress_bar_checkbox" type="checkbox" checked={isChecked} onChange={handleCheckboxChange} /> 
+        <div className='progress_bar_delete_icon_container'>
+          <img className='progress_bar_delete_icon' src="/src/assets/icons/remove_icon.png" alt="delete icon" onClick={deleteProgressBar} />
+        </div>
       </div>
     </div>
   )
@@ -64,6 +68,7 @@ ProgressBar.propTypes = {
   progress: PropTypes.number,
   handleCheckboxChange: PropTypes.func,
   isChecked: PropTypes.bool,
+  deleteProgressBar: PropTypes.func
 }
 
 export default ProgressBar
