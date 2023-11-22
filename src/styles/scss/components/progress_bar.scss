@@ -29,6 +29,11 @@
     font-size: 1rem;
     color: $primary_text_color;
     margin-right: 1rem;
+
+    &.animate {
+      transform: scale(1.1);
+      font-weight: lighter;
+    }
   }
 
   &_bg_container {

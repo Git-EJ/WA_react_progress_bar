@@ -8,82 +8,63 @@ const Main = () => {
   const name= "Jaillant"
   const date= "21/11/2023"
 
+  const arrayOfProgressBarsData = [
+    {
+      progressBarTitle: 'Initialisation du test technique',
+      progress: 50,
+      isChecked: false
+    },
+    {
+      progressBarTitle: 'Avancement de la phase de développement',
+      progress: 25,
+      isChecked: false
+    }
+  ]
+
+  const [progressBars, setProgressBars] = useState(arrayOfProgressBarsData)
 
   /**
    * 
-   * @param {boolean} isChecked1
-   * @param {boolean} isChecked2
-   * @description state of the checkboxes for the progress bars, 
-   *              when not check button not increase/decrease the progress bar
-   * 
+   * @description  This function is called when a checkbox is clicked, and update the state 
+   *          
    */
-  const [isChecked1, setIsChecked1] = useState(false);
-  const [isChecked2, setIsChecked2] = useState(false);
-
-  const handleCheckboxChange1 = () => {
-    setIsChecked1(!isChecked1);
+  const handleCheckboxChange = (index) => {
+    const newProgressBars = [...progressBars]
+    newProgressBars[index].isChecked = !newProgressBars[index].isChecked
+    setProgressBars(newProgressBars)
   }
-
-  const handleCheckboxChange2 = () => {
-    setIsChecked2(!isChecked2);
-  }
-
 
   /**
    * 
-   * @param {number} progress1
-   * @param {number} progress2
-   * @description state of the progress bars
-   * 
-  **/
-  const [progress1, setProgress1] = useState(50)
-  const [progress2, setProgress2] = useState(25)
-
-
-
+   * @description  This function is called when the button "Remettre à zéro les compteurs" is clicked, 
+   *               and update the progress of the progress bars to 0
+   */
   const decreaseToZero = () => {
-    if ((progress1 && isChecked1 === 0)) {
-      return 
-    }
-
-    if ((progress2 && isChecked2 === 0)) {
-      return 
-    }
-
-    if (isChecked1) {
-      setProgress1(0);
-    }
-
-    if (isChecked2) {
-      setProgress2(0);
-    }
+    const newProgressBars = [...progressBars]
+    newProgressBars.forEach(progressBar => {
+      if (progressBar.isChecked && progressBar.progress > 0) {
+        progressBar.progress = 0
+      }
+    })
+    setProgressBars(newProgressBars)
   }
 
   /**
    * 
    * @param {number} amount
-   * @description increase the progress bar by amount
+   * @description  This function is called when the button "Ajouter 5%" or "Ajouter 10%" is clicked,
+   *              and update the progress of the progress bars by the amount passed as an argument
    * 
-  **/
-
+   */
   const increaseByAmount = (amount) => {
-    if (isChecked1 && progress1 >= 100) {
-      return;
-    }
-  
-    if (isChecked1) {
-      const newProgress = progress1 + amount > 100 ? 100 : progress1 + amount;
-      setProgress1(newProgress);
-    }
-
-    if (isChecked2 && progress2 >= 100) {
-      return;
-    }
-  
-    if (isChecked2) {
-      const newProgress = progress2 + amount > 100 ? 100 : progress2 + amount;
-      setProgress2(newProgress);
-    }
+    const newProgressBars = [...progressBars]
+    newProgressBars.forEach(progressBar => {
+      if (progressBar.isChecked && progressBar.progress < 100) {
+        const result = progressBar.progress + amount
+        result <= 100 ? progressBar.progress = result : progressBar.progress = 100
+      }
+    })
+    setProgressBars(newProgressBars)
   }
 
   
@@ -95,19 +76,17 @@ const Main = () => {
       </div>
 
       <div className="main_progress_bar_wrapper">
-  
-        <ProgressBar  progressBarTitle= {'Initialisation du test technique'} 
-                      progress={progress1} 
-                      handleCheckboxChange={handleCheckboxChange1}
-                      isChecked={isChecked1}
-        />
-
-        <ProgressBar  progressBarTitle= {'Avancement de la phase de développement'} 
-                      progress={progress2} 
-                      handleCheckboxChange={handleCheckboxChange2}
-                      isChecked={isChecked2}
-        />
-
+        { progressBars.map((progressBar, index) => {
+          return (
+            <ProgressBar 
+              key={`progressBar ${index}`}
+              progressBarTitle={progressBar.progressBarTitle}
+              progress={progressBar.progress}
+              handleCheckboxChange={() => handleCheckboxChange(index)}
+              isChecked={progressBar.isChecked}
+            />
+          )
+        })}
       </div>
 
       <div className="main_buttons_container">

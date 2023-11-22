@@ -7,7 +7,8 @@ const ProgressBar = ({  progressBarTitle,
                         isChecked 
                       }) => {
 
-  const [color, setColor] = useState('')
+  const [color, setColor] = useState('') //for the progress bar filler and percentage color
+  const [animate, setAnimate] = useState(false) //for the displayed percentage
   
   useEffect(() => {
     
@@ -30,6 +31,10 @@ const ProgressBar = ({  progressBarTitle,
     } 
     
     changeColor()
+    setAnimate(true)
+
+    const timer = setTimeout(() => setAnimate(false), 500) //timer for the animation of the displayed percentage
+    return () => clearTimeout(timer);
 
   }, [progress])
 
@@ -38,12 +43,16 @@ const ProgressBar = ({  progressBarTitle,
     <div className="progress_bar_title_and_bar_container">
 
       <div className="progress_bar_title"> {progressBarTitle} </div>
-
       <div className="progress_bar_container">
-        <div className="progress_bar_percentage"> {progress}% </div>
+
+        <div className={`progress_bar_percentage${animate ? ' animate' : ''}`} style={animate ? { color: `${color}` } : {}}>
+          {progress}%
+        </div>
+
         <div className="progress_bar_bg_container">
           <div className="progress_bar_filler" style={{ width: `${progress}%`, backgroundColor:`${color}` }}></div>
         </div>
+        
         <input className="progress_bar_checkbox" type="checkbox" checked={isChecked} onChange={handleCheckboxChange} /> 
       </div>
     </div>
