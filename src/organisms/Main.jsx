@@ -22,6 +22,8 @@ const Main = () => {
   ]
 
   const [progressBars, setProgressBars] = useState(arrayOfProgressBarsData)
+  const [addProgressBarTitle, setAddProgressBarTitle] = useState('')
+  const [addProgressBarProgress, setAddProgressBarProgress] = useState('')
 
   /**
    * 
@@ -66,20 +68,56 @@ const Main = () => {
     })
     setProgressBars(newProgressBars)
   }
-
+  
   /**
    * 
    * @description  This function is called when the delete icon is clicked, and delete the progress bar
    * 
    */
-  const deleteProgressBar = () => {
-    const newProgressBars = [...progressBars]
-    newProgressBars.forEach(progressBar => {
-      const index = newProgressBars.indexOf(progressBar)
-      newProgressBars.splice(index, 1)
-    })
-    setProgressBars(newProgressBars)
+  const deleteProgressBar = (indexToDelete) => {
+    const newProgressBars = progressBars.filter((_, index) => index !== indexToDelete)
+    setProgressBars(newProgressBars);
   }
+
+  /**
+   * 
+   * @description This function is called when the input "Titre de la barre de progression" is added or modified,
+   * 
+   */
+  const addProgressBarTitleChange = (event) => {
+    if (event.target.value.length > 50) return alert('Le titre de la barre de progression ne doit pas dépasser 50 caractères')
+    setAddProgressBarTitle(event.target.value.trim())
+  }
+
+  /**
+   * 
+   * @description This function is called when the input "Pourcentage de progression (nombre)" is added or modified,
+   * 
+   */
+  const addProgressBarProgressChange = (event) => {
+    if (event.target.value > 100) return alert('Le pourcentage de progression ne doit pas dépasser 100%')
+    setAddProgressBarProgress(event.target.value.trim())
+  }
+
+
+  /**
+   * 
+   * @description  This function is called when the button "Ajouter une barre de progression" is clicked,
+   * 
+   */
+  const addProgressBar = () => {
+    const newProgressBars = [...progressBars]
+    newProgressBars.push({
+      progressBarTitle: addProgressBarTitle ? addProgressBarTitle : `Nouvelle barre de progression ${newProgressBars.length + 1}`,
+      progress: addProgressBarProgress ? addProgressBarProgress : 0,
+      isChecked: false
+    })
+    setProgressBars([...newProgressBars])
+    setAddProgressBarTitle('')
+    setAddProgressBarProgress('')
+  }
+
+
 
   return (
     <main className="main_wrapper">
@@ -88,16 +126,32 @@ const Main = () => {
         <p>réalisé le {date}</p>
       </div>
 
+      <div className="main_add_progress_bar_wrapper">
+        <button className="main_add_progress_bar_button" onClick={addProgressBar}>+</button>
+        <input  className="main_add_progress_bar_input_title" 
+                type="text" 
+                placeholder="Titre de la barre de progression" 
+                value={addProgressBarTitle} 
+                onChange={addProgressBarTitleChange}
+        />
+        <input  className="main_add_progress_bar_input_progress" 
+                type="number" 
+                placeholder="Pourcentage de progression (nombre)" 
+                value={addProgressBarProgress} 
+                onChange={addProgressBarProgressChange}
+        />
+      </div>
+
       <div className="main_progress_bar_wrapper">
         { progressBars.map((progressBar, index) => {
           return (
             <ProgressBar 
-              key={`progressBar ${index}`}
+              key={`progressBar${index}`}
               progressBarTitle={progressBar.progressBarTitle}
               progress={progressBar.progress}
               handleCheckboxChange={() => handleCheckboxChange(index)}
               isChecked={progressBar.isChecked}
-              deleteProgressBar={deleteProgressBar}
+              deleteProgressBar={() => deleteProgressBar(index)}
             />
           )
         })}

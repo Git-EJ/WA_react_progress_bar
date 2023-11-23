@@ -5,7 +5,7 @@ const ProgressBar = ({  progressBarTitle,
                         progress, 
                         handleCheckboxChange,
                         isChecked,
-                        deleteProgressBar
+                        deleteProgressBar,
                       }) => {
 
   const [color, setColor] = useState('') //for the progress bar filler and percentage color
@@ -68,7 +68,7 @@ ProgressBar.propTypes = {
   progress: PropTypes.number,
   handleCheckboxChange: PropTypes.func,
   isChecked: PropTypes.bool,
-  deleteProgressBar: PropTypes.func
+  deleteProgressBar: PropTypes.func,
 }
 
 export default ProgressBar
