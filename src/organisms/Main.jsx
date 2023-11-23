@@ -85,8 +85,14 @@ const Main = () => {
    * 
    */
   const addProgressBarTitleChange = (event) => {
-    if (event.target.value.length > 50) return alert('Le titre de la barre de progression ne doit pas dépasser 50 caractères')
-    setAddProgressBarTitle(event.target.value.trim())
+
+    const userInput = event.target.value.trim()
+
+    if (!/^[a-zA-Z0-9-_#* ]*$/.test(userInput)) return alert('Caractères non autorisés')
+  
+    if (userInput.length > 50) return alert('Le titre de la barre de progression ne doit pas dépasser 50 caractères')
+    
+    setAddProgressBarTitle(userInput)
   }
 
   /**
@@ -95,8 +101,14 @@ const Main = () => {
    * 
    */
   const addProgressBarProgressChange = (event) => {
+
+    const userInput = event.target.value.trim()
+
+    if (!/^[0-9]*$/.test(userInput)) return alert('Caractères non autorisés')
+
     if (event.target.value > 100) return alert('Le pourcentage de progression ne doit pas dépasser 100%')
-    setAddProgressBarProgress(event.target.value.trim())
+
+    setAddProgressBarProgress(userInput)
   }
 
 
@@ -133,9 +145,10 @@ const Main = () => {
                 placeholder="Titre de la barre de progression" 
                 value={addProgressBarTitle} 
                 onChange={addProgressBarTitleChange}
+                // pattern="^[a-zA-Z0-9-_#\\* ]+$"
         />
         <input  className="main_add_progress_bar_input_progress" 
-                type="number" 
+                type="text" 
                 placeholder="Pourcentage de progression (nombre)" 
                 value={addProgressBarProgress} 
                 onChange={addProgressBarProgressChange}
