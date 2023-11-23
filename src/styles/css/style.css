@@ -114,9 +114,10 @@ body ::-webkit-scrollbar {
   align-items: center;
   flex-direction: column;
   width: 100%;
-  height: calc(100vh - 70px);
+  min-height: calc(100vh - 70px);
   background: #242424;
   color: #fff;
+  padding: 2rem 0;
 }
 .main_title {
   display: flex;

@@ -3,9 +3,10 @@
   &_wrapper {
     @include flex_center_column;
     width:100%;
-    height: calc(100vh - 70px); // 70px height of header
+    min-height: calc(100vh - 70px); // 70px height of header
     background: $main_bg_color;
     color: $primary_text_color;
+    padding: 2rem 0;
   }
 
   &_title {
